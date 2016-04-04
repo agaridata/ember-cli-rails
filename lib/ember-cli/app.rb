@@ -151,27 +151,10 @@ module EmberCLI
     def prepare
       @prepared ||= begin
         check_addon!
-        check_ember_cli_version!
         reset_build_error!
         symlink_to_assets_root
         add_assets_to_precompile_list
         true
-      end
-    end
-
-    def check_ember_cli_version!
-      version = dev_dependencies.fetch("ember-cli").split(?-).first
-
-      unless Helpers.match_version?(version, EMBER_CLI_VERSIONS)
-        fail <<-MSG.strip_heredoc
-          EmberCLI Rails require ember-cli NPM package version to be
-          #{EMBER_CLI_VERSIONS.last} to work properly (you have #{version}).
-          From within your EmberCLI directory please update your package.json
-          accordingly and run:
-
-            $ npm install
-
-        MSG
       end
     end
 
